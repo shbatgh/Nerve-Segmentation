@@ -12,29 +12,6 @@ import torch
 # Load the model from 
 model = load_learner('C:/Users/grand/dev/internship2023/TRAINING/ForTraining3/FOR ARTICLE/INFERENCE/NEW_MODELS/34_1/U_net', 'U-net-final')
 
-def inference(image_path):
-    minv_global = 1000;
-    maxv_global = -1000;
-    with Image.open(image_path) as im:
-        pic = pil2tensor(im, np.float32)
-        pic2 = torch.cat((pic, pic,pic), dim=0)
-        pic3 = torch.div(pic, 255)
-        inf = model.predict(open_image(image_path))
-        #Convert from Fast ai to numpy and convert the dimension
-        inf_numpy = inf[2].numpy()
-        inf_numpy = inf_numpy[0,:,:]
-        minv = np.amin(inf_numpy)
-        maxv = np.amax(inf_numpy)
-        if minv < minv_global:
-            minv_global = minv
-        if maxv > maxv_global:
-            maxv_global = maxv
-        #Convert from numpy to Pillow
-        inf_numpy = (255 * (inf_numpy - minv_global) / (maxv_global - minv_global)).astype(np.uint8)
-        im2 = PIL.Image.fromarray(inf_numpy)
-
-    return im2
-
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -56,6 +33,9 @@ class App(ctk.CTk):
 
         self.download_button = ctk.CTkButton(self, text="Download Image", command=self.download_image)
         self.download_button.grid(row=3, column=2, padx=10, pady=20, sticky="ns")
+
+        self.download_button = ctk.CTkButton(self, text="Load Model", command=self.load_model)
+        self.download_button.grid(row=0, column=1, padx=0, pady=0)
 
         self.image_label = ctk.CTkLabel(self, text="", fg_color="transparent")
         self.image_label.grid(row=2, column=0, padx=10, pady=10)
@@ -87,7 +67,7 @@ class App(ctk.CTk):
         return image
 
     def segment_image(self):
-        image = inference(self.image_path)
+        image = self.inference(self.image_path)
         self.output_image = image
 
         photo = ImageTk.PhotoImage(image)
@@ -100,6 +80,31 @@ class App(ctk.CTk):
     def download_image(self):
         file_path = filedialog.asksaveasfilename()
         self.output_image.save(file_path)
+
+    def load_model(self):
+        model_path = filedialog.askopenfilename()
+        self.model = load_learner(model_path)
+
+    def inference(self, image_path):
+        minv_global = 1000;
+        maxv_global = -1000;
+        with Image.open(image_path) as im:
+            inf = self.model.predict(open_image(image_path))
+            #Convert from Fast ai to numpy and convert the dimension
+            inf_numpy = inf[2].numpy()
+            inf_numpy = inf_numpy[0,:,:]
+            minv = np.amin(inf_numpy)
+            maxv = np.amax(inf_numpy)
+            if minv < minv_global:
+                minv_global = minv
+            if maxv > maxv_global:
+                maxv_global = maxv
+            #Convert from numpy to Pillow
+            inf_numpy = (255 * (inf_numpy - minv_global) / (maxv_global - minv_global)).astype(np.uint8)
+            im2 = PIL.Image.fromarray(inf_numpy)
+
+        return im2
+
 
     def button_callback(self):
         print("button pressed")
