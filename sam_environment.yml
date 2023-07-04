@@ -1,6 +1,5 @@
-name: fastai1
+name: fast
 channels:
-  - pytorch
   - fastai
   - conda-forge
   - anaconda
@@ -44,8 +43,6 @@ dependencies:
   - importlib-metadata=2.0.0=py_1
   - importlib_metadata=2.0.0=1
   - intel-openmp=2020.2=254
-  - ipykernel=5.3.4=py37h5ca1d4c_0
-  - ipython=7.18.1=py37h5ca1d4c_0
   - ipython_genutils=0.2.0=py37_0
   - ipywidgets=7.5.1=py_1
   - jedi=0.18.0=py37haa95532_1
@@ -53,9 +50,7 @@ dependencies:
   - jpeg=9b=vc14h4d7706e_1
   - jsonschema=3.0.2=py37_0
   - jupyter=1.0.0=py37_7
-  - jupyter_client=6.1.7=py_0
   - jupyter_console=6.2.0=py_0
-  - jupyter_core=4.6.3=py37_0
   - jupyterlab_pygments=0.1.2=py_0
   - kiwisolver=1.2.0=py37h74a9793_0
   - libpng=1.6.37=h2a8f88b_0
@@ -85,7 +80,6 @@ dependencies:
   - nbclient=0.5.1=py_0
   - nbconvert=6.0.7=py37_0
   - nbformat=5.0.8=py_0
-  - nest-asyncio=1.4.1=py_0
   - networkx=2.6.3=pyhd3eb1b0_0
   - ninja=1.10.1=py37h7ef1ec2_0
   - notebook=6.1.4=py37_0
@@ -116,14 +110,12 @@ dependencies:
   - pyrsistent=0.17.3=py37he774522_0
   - pysocks=1.7.1=py37_1
   - python=3.7.9=h60c2a47_0
-  - python-dateutil=2.8.1=py_0
-  - pytorch=1.9.0=py3.7_cuda10.2_cudnn7_0
+  - python_abi=3.7=2_cp37m
   - pytz=2020.1=py_0
   - pywavelets=1.3.0=py37h2bbff1b_0
   - pywin32=227=py37he774522_1
   - pywinpty=0.5.7=py37_0
   - pyyaml=5.3.1=py37he774522_0
-  - pyzmq=19.0.2=py37ha925a31_1
   - qt=5.9.7=vc14h73c81de_0
   - qtconsole=4.7.7=py_0
   - qtpy=1.9.0=py_0
@@ -144,10 +136,7 @@ dependencies:
   - tifffile=2020.10.1=py37h8c2d366_2
   - tk=8.6.10=he774522_0
   - toolz=0.12.0=py37haa95532_0
-  - torchvision=0.10.0=py37_cu102
-  - tornado=6.0.4=py37he774522_1
   - tqdm=4.65.0=pyhd8ed1ab_1
-  - traitlets=5.0.5=py_0
   - typing_extensions=3.7.4.3=py_0
   - urllib3=1.25.11=py_0
   - vc=14.1=h0510ff6_4
@@ -167,7 +156,22 @@ dependencies:
   - zlib=1.2.11=vc14h1cdd9ab_1
   - zstd=1.4.4=ha9fde0e_3
   - pip:
-    - image-slicer==2.1.1
-    - opencv-python==4.7.0.72
-    - pillow==8.0.0
-prefix: C:\Users\sysgen\.conda\envs\fastai1
+      - debugpy==1.6.7
+      - image-slicer==2.1.1
+      - ipykernel==6.16.2
+      - ipython==7.34.0
+      - jupyter-client==7.4.9
+      - jupyter-core==4.12.0
+      - matplotlib-inline==0.1.6
+      - nest-asyncio==1.5.6
+      - opencv-python==4.7.0.72
+      - pillow==8.0.0
+      - psutil==5.9.5
+      - python-dateutil==2.8.2
+      - pyzmq==25.1.0
+      - torch==1.9.0+cu111
+      - torchaudio==0.9.0
+      - torchvision==0.10.0+cu111
+      - tornado==6.2
+      - traitlets==5.9.0
+prefix: C:\Users\grand\miniconda3\envs\fast

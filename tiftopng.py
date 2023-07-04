@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-directoryIn = 'C:/Users/grand/dev/internship2023/OUT'
+directoryIn = 'C:/Users/grand/dev/internship2023/Inference/IN'
 
 # Get all .tif files in directoryIn
 baseFileNamesIn = [os.path.join(directoryIn, name)
