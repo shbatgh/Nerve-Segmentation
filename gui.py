@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from customtkinter import CTkImage
 from tkinter import filedialog, Label
 from PIL import Image, ImageTk
 from fastai.vision import load_learner, open_image
@@ -7,20 +8,22 @@ from fastai.vision import pil2tensor, open_image
 import numpy as np
 import PIL
 from PIL import Image 
-import torch
+import os
 
 # Load the model from 
-model = load_learner('C:/Users/grand/dev/internship2023/TRAINING/ForTraining3/FOR ARTICLE/INFERENCE/NEW_MODELS/34_1/U_net', 'U-net-final')
+model = load_learner('C:/Users/grand/dev/internship2023', 'Unet_processing')
 
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
 
         self.title("Segmentation")
-        self.geometry("600x300")
+        self.geometry("600x320")
 
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("dark-blue")
+
+        self.model = model
 
         self.input_button = ctk.CTkButton(self, text="Input Image", command=self.open_image)
         self.input_button.grid(row=1, column=0, padx=10, pady=0, sticky="ns")
@@ -32,13 +35,13 @@ class App(ctk.CTk):
         self.output_button.grid(row=1, column=2, padx=10, pady=0, sticky="ns")
 
         self.download_button = ctk.CTkButton(self, text="Download Image", command=self.download_image)
-        self.download_button.grid(row=3, column=2, padx=10, pady=20, sticky="ns")
+        self.download_button.grid(row=0, column=2, padx=10, pady=20)
 
         self.download_button = ctk.CTkButton(self, text="Load Model", command=self.load_model)
         self.download_button.grid(row=0, column=1, padx=0, pady=0)
 
-        self.image_label = ctk.CTkLabel(self, text="", fg_color="transparent")
-        self.image_label.grid(row=2, column=0, padx=10, pady=10)
+        self.input_image_label = ctk.CTkLabel(self, text="", fg_color="transparent")
+        self.input_image_label.grid(row=2, column=0, padx=10, pady=10)
 
         self.output_image_label = ctk.CTkLabel(self, text="", fg_color="transparent")
         self.output_image_label.grid(row=2, column=2, padx=10, pady=10)
@@ -59,10 +62,10 @@ class App(ctk.CTk):
         image = Image.open(file_path)
         image = image.resize((256, 256))
         self.image = open_image(file_path)
-        photo = ctk.PhotoImage(image)
+        photo = ImageTk.PhotoImage(image)
 
-        self.image_label = ctk.CTkLabel(image=photo)
-        self.image_label.image = photo
+        self.input_image_label.configure(image=photo)
+        self.input_image_label.image = photo
 
         return image
 
@@ -83,12 +86,13 @@ class App(ctk.CTk):
 
     def load_model(self):
         model_path = filedialog.askopenfilename()
-        self.model = load_learner(model_path)
+        self.model = load_learner(os.path.dirname(model_path), os.path.basename(model_path))
 
     def inference(self, image_path):
         minv_global = 1000;
         maxv_global = -1000;
         with Image.open(image_path) as im:
+            test = open_image(image_path)
             inf = self.model.predict(open_image(image_path))
             #Convert from Fast ai to numpy and convert the dimension
             inf_numpy = inf[2].numpy()
@@ -104,7 +108,6 @@ class App(ctk.CTk):
             im2 = PIL.Image.fromarray(inf_numpy)
 
         return im2
-
 
     def button_callback(self):
         print("button pressed")
