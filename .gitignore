@@ -7,6 +7,10 @@ mosaicOut/
 OLD/
 Inference/
 good_inferences/
+testImages/
+Data-imagenet/
+U_net/
+Unet_processing
 <<<<<<< HEAD
 Unetsam.py
 =======

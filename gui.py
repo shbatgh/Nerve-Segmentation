@@ -11,7 +11,7 @@ from PIL import Image
 import os
 
 # Load the model from 
-model = load_learner('C:/Users/grand/dev/internship2023', 'Unet_processing')
+model = load_learner('C:/Users/grand/dev/internship2023/U_net', 'U-net-finalt')
 
 class App(ctk.CTk):
     def __init__(self):

@@ -4,12 +4,17 @@ import customtkinter
 import cv2
 import PIL
 import time
+import fastai
 from fastai.vision import load_learner, pil2tensor, Image
 import numpy as np
 import PIL
+import torch
+from collections import deque
+from tifffile import imwrite
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
+
 
 model = load_learner('C:/Users/grand/dev/internship2023', 'Unet_processing')
 
@@ -18,6 +23,7 @@ class App(customtkinter.CTk):
         super().__init__()
 
         self.model = model
+        self.image_buffer = deque(maxlen=100)
 
         ####### initialization part of the cameras
         self.video_source=0
@@ -25,7 +31,7 @@ class App(customtkinter.CTk):
 
         # configure window
         self.title("Live Segmentation")
-        self.geometry(f"{1400}x{700}")
+        self.geometry(f"{1200}x{700}")
 
         # configure grid layout (4x4)
         self.grid_columnconfigure(1, weight=1)
@@ -56,6 +62,10 @@ class App(customtkinter.CTk):
         self.nmainframe_label = customtkinter.CTkLabel(self.mainframe_frame, text="")
         #self.nmainframe_label.grid(column=1, row=0)
 
+        self.acquire_button = customtkinter.CTkButton(master=self, fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"), text="acquire",command=self.acquisition)
+        self.acquire_button.grid(row=3, column=3, padx=(20, 20), pady=(20, 20), sticky="nsew")
+
+
     def inference(self, img):
         minv_global = 1000;
         maxv_global = -1000;
@@ -75,6 +85,16 @@ class App(customtkinter.CTk):
         im2 = PIL.Image.fromarray(inf_numpy)
 
         return im2
+    
+    def acquisition(self):
+        print("acquisition in process")
+        
+        self.image_stack = np.stack(self.image_buffer)
+        
+        current_time = time.strftime("__%Y-%m-%d_%H-%M-%S", time.gmtime())
+        filename="testImages/"f"{current_time}"+".tif"
+
+        imwrite(filename, self.image_stack)
 
     def update(self):
         start_time = time.time()
@@ -90,6 +110,7 @@ class App(customtkinter.CTk):
             # downsize gray to half its original size
             gray = cv2.resize(gray, (0, 0), fx=0.25, fy=0.25)
             self.photo = self.inference(Image(pil2tensor(gray, np.float32).div_(255)))
+            self.image_buffer.append(np.array(self.photo))
             self.photo = customtkinter.CTkImage(self.photo, size=(x, y))
 
             frame = customtkinter.CTkImage(PIL.Image.fromarray(frame), size=(x, y))
@@ -104,6 +125,7 @@ class App(customtkinter.CTk):
   
             self.mainframe_label.grid(column=0, row=0)
             self.nmainframe_label.grid(column=1, row=0)
+
 
             
         self.mainframe_frame.after(10,self.update)### run the function again after a certain delay
