@@ -11,6 +11,17 @@ testImages/
 Data-imagenet/
 U_net/
 Unet_processing
+inf/
+Inferenceted/
+nerve/
+oxford-iiit-pet/
+pdata/
+super_data/
+TEST/
+Train/
+Training/
+Unet_processing2/
+data/
 <<<<<<< HEAD
 Unetsam.py
 =======

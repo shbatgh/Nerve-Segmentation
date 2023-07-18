@@ -16,7 +16,7 @@ customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 
-model = load_learner('C:/Users/grand/dev/internship2023', 'Unet_processing')
+model = load_learner('../internship2023', 'Unet_processing')
 
 class App(customtkinter.CTk):
     def __init__(self):

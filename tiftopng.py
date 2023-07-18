@@ -1,12 +1,12 @@
 import os
 from PIL import Image
 
-directoryIn = 'C:/Users/grand/dev/internship2023/Inference/IN'
+directoryIn = 'Inference/IN'
 
 # Get all .tif files in directoryIn
 baseFileNamesIn = [os.path.join(directoryIn, name)
                    for name in os.listdir(directoryIn)
-                   if name.endswith((".tif", ".tiff"))]
+                   if name.endswith((".JPEG", ".jpg"))]
 
 # Process all images
 for fullFileNameIn in baseFileNamesIn:
