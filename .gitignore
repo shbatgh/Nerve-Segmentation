@@ -22,6 +22,16 @@ Train/
 Training/
 Unet_processing2/
 data/
+.ipynb_checkpoints/
+tump/
+Mosaic-26-07-23/
+measure/
+InferenceSuperResolution/
+InferenceSuperRes/
+InferenceWithFeatLoss/
+Inference2/
+InferenceLong/
+Denoising/
 <<<<<<< HEAD
 Unetsam.py
 =======
